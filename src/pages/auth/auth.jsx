@@ -21,7 +21,7 @@ export const Auth = () =>{
         //setting local storage
         localStorage.setItem("auth", JSON.stringify(authInfo));
         navigate("/expense-tracker");
-    }
+    };
    
     return (
         <>
