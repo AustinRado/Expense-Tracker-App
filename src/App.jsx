@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Auth} from "./pages/auth/auth";
 import {ExpenseTracker} from "./pages/expense-tracker/expense_tracker";
+
 import './App.css';
 
 function App() {
