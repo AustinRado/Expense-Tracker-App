@@ -1,10 +1,12 @@
 
 import {auth, provider} from "../../config/firebase.config";
 import { signInWithPopup } from "firebase/auth";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, Navigate} from "react-router-dom";
+import {useGetUserInfo} from "../../hooks/useGetUserInfo";
 
 export const Auth = () =>{
     const navigate = useNavigate();
+    const {isAuth} = useGetUserInfo();
     /**
      * @desc calls a firebase package
      * 
@@ -22,6 +24,9 @@ export const Auth = () =>{
         localStorage.setItem("auth", JSON.stringify(authInfo));
         navigate("/expense-tracker");
     };
+    if (isAuth){
+        return <Navigate to = "/expense-tracker"/>;
+    }
    
     return (
         <>
