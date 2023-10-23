@@ -9,12 +9,13 @@ import { useNavigate } from "react-router-dom";
 export const ExpenseTracker = () =>{
 
     const {addTransaction} = useAddTransaction();
-    const {transactions} = useGetTransaction();
+    const {transactions, transactionsTotals} = useGetTransaction();
     const {name, profilePic} = useGetUserInfo();
 
     const [description, setDescription] = useState("");
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [transactionType, setTransactionType] = useState("expense");
+    const {balance, income, expenses} = transactionsTotals
     const navigate = useNavigate();
 
     /**
@@ -48,16 +49,16 @@ export const ExpenseTracker = () =>{
                 <h1>{name}</h1>
                 <div>
                     <h2>Balance</h2>
-                    <p>$ 0.00</p>
+                    {balance >= 0 ? <p>${balance}</p> : <p>-${balance * -1}</p>}
                 </div>
                 <div>
                     <div>
                         <h4>Income</h4>
-                        <p>$ 0.00</p>
+                        <p>${income}</p>
                     </div>
                     <div>
                     <h4>Expenses</h4>
-                    <p>$ 0.00</p>
+                    <p>$ {expenses}</p>
                     </div>
                 </div>
                 <form
