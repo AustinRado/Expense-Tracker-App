@@ -9,7 +9,7 @@ function App() {
   return (
     <>
     <Router>
-    <h1 className='text-2xl font-bold'>Expense Tracker App</h1>
+    <h1 className='text-2xl font-bold'>Expense Tracker </h1>
       <Routes>
         <Route path="/" exact element = {<Auth />} />
         <Route path="/expense-tracker" element={< ExpenseTracker/>} />
