@@ -2,16 +2,20 @@ import { useState } from "react";
 import {useAddTransaction} from "../../hooks/useAddTransaction";
 import {useGetTransaction} from "../../hooks/useGetTransaction";
 import {useGetUserInfo} from "../../hooks/useGetUserInfo";
+import { signOut } from "firebase/auth";
+import {auth} from "../../config/firebase.config";
+import { useNavigate } from "react-router-dom";
 
 export const ExpenseTracker = () =>{
 
     const {addTransaction} = useAddTransaction();
     const {transactions} = useGetTransaction();
-    const {name} = useGetUserInfo();
+    const {name, profilePic} = useGetUserInfo();
 
     const [description, setDescription] = useState("");
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [transactionType, setTransactionType] = useState("expense");
+    const navigate = useNavigate();
 
     /**
      * @desc for form submitting data
@@ -24,7 +28,18 @@ export const ExpenseTracker = () =>{
             transactionAmount,
             transactionType,
         });
-    }
+    };
+    const signUserOut = async() =>{
+        try {
+            await signOut(auth);
+            //clean up. Clear local storage and navigate towards the login page
+            localStorage.clear();
+            navigate("/");
+
+        } catch (error) {
+            console.error(error);
+        }
+    }; 
 
     return (
         <>
@@ -81,6 +96,15 @@ export const ExpenseTracker = () =>{
                     >Add Transaction</button>
                 </form>
             </div>
+            {profilePic && (
+                <div>
+                    <img src={profilePic}></img>
+                    <button  
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={signUserOut}
+                    > sign out </button>
+                </div>
+            )}
             <div>
                 <h1>Transactions</h1>
                 <ul>
